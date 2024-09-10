@@ -1,125 +1,99 @@
-let vida = 100; 
+let vida = 100;
 let inventario = {
-    empatia: 0,
-    coragem: 0
+   empatia: 0,
+   coragem: 0
 };
-
-
-let checkpoints = [];
-
-
+var checkpointVida = 0;
+var checkpointInventario = 0;
 function salvarCheckpoint() {
-    checkpoints.push({
-        vida: vida,
-        inventario: {...inventario} 
-    });
-    alert("Checkpoint salvo!");
+   checkpointVida = vida;
+   checkpointInventario = inventario.slice(); // Clonagem do inventário
+   alert("Checkpoint salvo!");
 }
-
-function carregarCheckpoint(indice) {
-    if (indice >= 0 && indice < checkpoints.length) {
-        vida = checkpoints[indice].vida;
-        inventario = {...checkpoints[indice].inventario};
-        alert(`Checkpoint ${indice} carregado.`);
-    } else {
-        alert("Checkpoint inválido.");
-    }
+function carregarCheckpoint() {
+   if (checkpointVida !== 0 && checkpointInventario !== 0) {
+       vida = checkpointVida;
+       inventario = checkpointInventario.slice(); // Carrega o inventário salvo
+       alert("Checkpoint carregado.");
+   } else {
+       alert("Nenhum checkpoint salvo.");
+   }
 }
-
-
 function explorar() {
-    let local = prompt("Escolha um local para explorar: floresta ou cidade").toLowerCase();
-
-    alert(`Luna está explorando ${local}.`);
-
-    if (local === "floresta") {
-        alert("Luna encontra uma planta rara que a faz sentir-se renovada.");
-        vida += 10; 
-    } else if (local === "cidade") {
-        alert("Luna conhece uma pessoa que compartilha uma história inspiradora.");
-        inventario.empatia += 5; 
-    } else {
-        alert("Não há nada interessante aqui.");
-        vida -= 5; 
-    }
+   let local = prompt("Escolha um local para explorar: floresta ou cidade").toLowerCase();
+   alert(`Luna está explorando ${local}.`);
+   if (local === "floresta") {
+       alert("Luna encontra uma planta rara que a faz sentir-se renovada.");
+       vida += 10;
+   } else if (local === "cidade") {
+       alert("Luna conhece uma pessoa que compartilha uma história inspiradora.");
+       inventario.empatia += 5;
+   } else {
+       alert("Não há nada interessante aqui.");
+       vida -= 5;
+   }
 }
-
-
 function interagirComNPC() {
-    let nomeNPC = prompt("Escolha um NPC para interagir: sábio ou comerciante").toLowerCase();
-
-    alert(`Luna está conversando com ${nomeNPC}.`);
-
-    if (nomeNPC === "treinador") {
-        alert("O treinador dá a Luna um conselho valioso e a encoraja.");
-        inventario.coragem += 10; 
-    } else if (nomeNPC === "comerciante") {
-        alert("O comerciante pede empatia em troca de um item.");
-        if (inventario.empatia >= 10) {
-            inventario.empatia -= 10;
-            alert("Luna recebe o item.");
-        } else {
-            alert("Luna não tem empatia suficiente.");
-        }
-    } else {
-        alert("A conversa não leva a nada.");
-        vida -= 5; 
-    }
+   let nomeNPC = prompt("Escolha um NPC para interagir: sábio ou comerciante").toLowerCase();
+   alert(`Luna está conversando com ${nomeNPC}.`);
+   if (nomeNPC === "treinador") {
+       alert("O treinador dá a Luna um conselho valioso e a encoraja.");
+       inventario.coragem += 10;
+   } else if (nomeNPC === "comerciante") {
+       alert("O comerciante pede empatia em troca de um item.");
+       if (inventario.empatia >= 10) {
+           inventario.empatia -= 10;
+           alert("Luna recebe o item.");
+       } else {
+           alert("Luna não tem empatia suficiente.");
+       }
+   } else {
+       alert("A conversa não leva a nada.");
+       vida -= 5;
+   }
 }
-
-
 function enfrentarDesafio() {
-    let tipoDesafio = prompt("Escolha um desafio para enfrentar: puzzle ou batalha").toLowerCase();
-
-    alert(`Luna está enfrentando um desafio: ${tipoDesafio}.`);
-
-    if (tipoDesafio === "puzzle") {
-        alert("Luna resolve o quebra-cabeça com sucesso.");
-        vida += 20; 
-    } else if (tipoDesafio === "batalha") {
-        alert("Luna vence a batalha com bravura.");
-        vida += 10; 
-    } else {
-        alert("O desafio é muito difícil e Luna falha.");
-        vida -= 15; 
-    }
+   let tipoDesafio = prompt("Escolha um desafio para enfrentar: puzzle ou batalha").toLowerCase();
+   alert(`Luna está enfrentando um desafio: ${tipoDesafio}.`);
+   if (tipoDesafio === "puzzle") {
+       alert("Luna resolve o quebra-cabeça com sucesso.");
+       vida += 20;
+   } else if (tipoDesafio === "batalha") {
+       alert("Luna vence a batalha com bravura.");
+       vida += 10;
+   } else {
+       alert("O desafio é muito difícil e Luna falha.");
+       vida -= 15;
+   }
 }
-
-
 function verificarStatus() {
-    alert(`Vida: ${vida}`);
-    alert(`Inventário: Empatia (${inventario.empatia}), Coragem (${inventario.coragem})`);
+   alert(`Vida: ${vida}`);
+   alert(`Inventário: Empatia (${inventario.empatia}), Coragem (${inventario.coragem})`);
 }
-
-
 function iniciarJogo() {
-    alert("Bem-vinda ao Crônicas do Imaginário, Luna Solomon!");
-
-  
-    salvarCheckpoint();
-
-    while (true) {
-        let acao = prompt("Escolha uma ação: explorar, interagir, enfrentar, status ou sair").toLowerCase();
-
-        if (acao === "explorar") {
-            explorar();
-        } else if (acao === "interagir") {
-            interagirComNPC();
-        } else if (acao === "enfrentar") {
-            enfrentarDesafio();
-        } else if (acao === "status") {
-            verificarStatus();
-        } else if (acao === "sair") {
-            alert("Obrigado por jogar! Até a próxima!");
-            break;
-        } else {
-            alert("Ação inválida. Tente novamente.");
-        }
-
-       
-        salvarCheckpoint();
-    }
+   alert("Bem-vinda ao Crônicas do Imaginário, Luna Solomon!");
+   salvarCheckpoint();
+   while (true) {
+       let acao = prompt("Escolha uma ação: explorar, interagir, enfrentar, status, carregar ou sair").toLowerCase();
+       if (acao === "explorar") {
+           explorar();
+       } else if (acao === "interagir") {
+           interagirComNPC();
+       } else if (acao === "enfrentar") {
+           enfrentarDesafio();
+       } else if (acao === "status") {
+           verificarStatus();
+       } else if (acao === "carregar") {
+           carregarCheckpoint();
+       } else if (acao === "sair") {
+           alert("Obrigado por jogar! Até a próxima!");
+           break;
+       } else {
+           alert("Ação inválida. Tente novamente.");
+       }
+       salvarCheckpoint();
+   }
 }
-
-
 iniciarJogo();
+tem menu de contexto
+
